@@ -1,0 +1,16 @@
+[
+{
+  "modid": "silentboss",
+  "name": "SilentBoss",
+  "description": "Silence the bosses",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://lxgaming.github.io/",
+  "updateUrl": "",
+  "authorList": ["LX_Gaming"],
+  "credits": "",
+  "logoFile": "lxgamingface.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
