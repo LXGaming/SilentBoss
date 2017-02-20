@@ -16,12 +16,40 @@
 
 package io.github.lxgaming.silentboss.listeners;
 
+import io.github.lxgaming.silentboss.SilentBoss;
+import io.github.lxgaming.silentboss.util.LogManager;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SilentBossListener {
 	
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onPlaySoundEvent(PlaySoundEvent event) {
+		if (event.getName() == null) {
+			return;
+		}
+		
+		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.enderdragon.death")) {
+			event.setResultSound(null);
+			if (SilentBoss.getInstance().getConfig().isDebug()) {
+				LogManager.info("Successfully suppressed 'EnderDragon' sound.");
+			}
+		}
+		
+		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.wither.spawn")) {
+			event.setResultSound(null);
+			if (SilentBoss.getInstance().getConfig().isDebug()) {
+				LogManager.info("Successfully suppressed 'Wither' sound.");
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.SERVER)
 	public void onServerConnectionFromClient(ServerConnectionFromClientEvent event) {
 		event.getManager().channel().pipeline().addBefore("encoder", "silentboss_encoder", new SilentBossPacketHandler());
 	}

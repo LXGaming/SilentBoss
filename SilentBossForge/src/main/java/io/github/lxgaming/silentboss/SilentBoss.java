@@ -17,36 +17,55 @@
 package io.github.lxgaming.silentboss;
 
 import io.github.lxgaming.silentboss.commands.SilentBossCommand;
-import io.github.lxgaming.silentboss.config.Configuration;
+import io.github.lxgaming.silentboss.configuration.Config;
 import io.github.lxgaming.silentboss.listeners.SilentBossListener;
+import io.github.lxgaming.silentboss.util.LogManager;
 import io.github.lxgaming.silentboss.util.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS, acceptableRemoteVersions = "*", serverSideOnly = true)
+@Mod(
+	modid = Reference.MOD_ID,
+	name = Reference.MOD_NAME,
+	version = Reference.VERSION,
+	acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
+	acceptableRemoteVersions = Reference.ACCEPTABLE_REMOTE_VERSIONS,
+	certificateFingerprint = Reference.CERTIFICATE_FINGERPRINT
+)
 public class SilentBoss {
 	
-	@Instance
+	@Mod.Instance
 	private static SilentBoss instance;
-	private Configuration configuration;
 	
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		this.configuration = new Configuration(event.getModConfigurationDirectory());
-		this.configuration.loadConfig();
+	private Config config;
+	
+	public SilentBoss() {
+		this.config = new Config();
 	}
 	
-	@EventHandler
+	@Mod.EventHandler
+	public void fingerprintViolation(FMLFingerprintViolationEvent event) {
+		LogManager.fatal("Certificate Fingerprint Violation Detected!");
+	}
+	
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		getConfig().loadConfig(event.getSuggestedConfigurationFile());
+	}
+	
+	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new SilentBossListener());
 	}
 	
-	@EventHandler
+	@Mod.EventHandler
+	@SideOnly(Side.SERVER)
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new SilentBossCommand());
 	}
@@ -55,7 +74,7 @@ public class SilentBoss {
 		return instance;
 	}
 	
-	public Configuration getConfiguration() {
-		return this.configuration;
+	public Config getConfig() {
+		return this.config;
 	}
 }

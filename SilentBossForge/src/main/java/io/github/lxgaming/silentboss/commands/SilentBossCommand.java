@@ -31,17 +31,17 @@ import net.minecraft.util.text.TextFormatting;
 public class SilentBossCommand extends CommandBase {
 	
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "SilentBoss";
 	}
-
+	
 	@Override
-	public String getCommandUsage(ICommandSender sender) {
+	public String getUsage(ICommandSender sender) {
 		return "/SilentBoss";
 	}
 	
 	@Override
-	public List<String> getCommandAliases() {
+	public List<String> getAliases() {
 		List<String> aliases = new ArrayList<String>();
 		aliases.add("SilentBoss");
 		return aliases;
@@ -54,8 +54,8 @@ public class SilentBossCommand extends CommandBase {
 	
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString(TextFormatting.GOLD + "===== " + TextFormatting.AQUA + "SilentBoss" + TextFormatting.GOLD + " ====="));
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString(TextFormatting.GOLD + "Version - " + TextFormatting.GREEN + Reference.VERSION));
+		Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GOLD + "===== " + TextFormatting.AQUA + "SilentBoss" + TextFormatting.GOLD + " ====="));
+		Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Version - " + TextFormatting.GREEN + Reference.VERSION));
 		return;
 	}
 }

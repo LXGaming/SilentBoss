@@ -38,7 +38,7 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 			
 			byteBuf = ((ByteBuf) msg).copy();
 			PacketBuffer packetBuffer = new PacketBuffer(byteBuf);
-			int packetId = packetBuffer.readVarIntFromBuffer();
+			int packetId = packetBuffer.readVarInt();
 			
 			if (packetId != 33) {
 				super.write(ctx, msg, promise);
@@ -46,13 +46,17 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 			}
 			
 			int effectId = packetBuffer.readInt();
-			if (effectId == 1028 && SilentBoss.getInstance().getConfiguration().getConfig().get("SilenceEnderDragon").getAsBoolean()) {
-				process("EnderDragon");
+			if (effectId == 1028 && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
+				if (SilentBoss.getInstance().getConfig().isDebug()) {
+					LogManager.info("Successfully suppressed 'EnderDragon' sound.");
+				}
 				return;
 			}
 			
-			if (effectId == 1023 && SilentBoss.getInstance().getConfiguration().getConfig().get("SilenceWither").getAsBoolean()) {
-				process("Wither");
+			if (effectId == 1023 && SilentBoss.getInstance().getConfig().isSilenceWither()) {
+				if (SilentBoss.getInstance().getConfig().isDebug()) {
+					LogManager.info("Successfully suppressed 'Wither' sound.");
+				}
 				return;
 			}
 			super.write(ctx, msg, promise);
@@ -66,11 +70,5 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 			}
 		}
 		return;
-	}
-	
-	private void process(String boss) {
-		if (SilentBoss.getInstance().getConfiguration().getConfig().get("Debug").getAsBoolean()) {
-			LogManager.info("Successfully suppressed '" + boss + "' sound.");
-		}
 	}
 }
