@@ -18,7 +18,7 @@ package io.github.lxgaming.silentboss.configuration;
 
 import java.io.File;
 
-import io.github.lxgaming.silentboss.util.LogManager;
+import io.github.lxgaming.silentboss.util.LogHelper;
 import net.minecraftforge.common.config.Configuration;
 
 public class Config {
@@ -38,7 +38,7 @@ public class Config {
 		this.silenceWither = getConfiguration().getBoolean("silenceWither", Configuration.CATEGORY_GENERAL, true, "Silence the Wither?");
 		
 		getConfiguration().save();
-		LogManager.info("Configuration file successfully loaded.");
+		LogHelper.info("Configuration file successfully loaded.");
 	}
 	
 	public Configuration getConfiguration() {

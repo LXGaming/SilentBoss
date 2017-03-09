@@ -17,7 +17,7 @@
 package io.github.lxgaming.silentboss.listeners;
 
 import io.github.lxgaming.silentboss.SilentBoss;
-import io.github.lxgaming.silentboss.util.LogManager;
+import io.github.lxgaming.silentboss.util.LogHelper;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent;
@@ -36,14 +36,14 @@ public class SilentBossListener {
 		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.enderdragon.death")) {
 			event.setResultSound(null);
 			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogManager.info("Successfully suppressed 'EnderDragon' sound.");
+				LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
 			}
 		}
 		
 		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.wither.spawn")) {
 			event.setResultSound(null);
 			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogManager.info("Successfully suppressed 'Wither' sound.");
+				LogHelper.info("Successfully suppressed 'Wither' sound.");
 			}
 		}
 	}

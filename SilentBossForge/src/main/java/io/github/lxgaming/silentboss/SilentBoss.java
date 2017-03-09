@@ -16,19 +16,15 @@
 
 package io.github.lxgaming.silentboss;
 
-import io.github.lxgaming.silentboss.commands.SilentBossCommand;
 import io.github.lxgaming.silentboss.configuration.Config;
 import io.github.lxgaming.silentboss.listeners.SilentBossListener;
-import io.github.lxgaming.silentboss.util.LogManager;
+import io.github.lxgaming.silentboss.util.LogHelper;
 import io.github.lxgaming.silentboss.util.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(
 	modid = Reference.MOD_ID,
@@ -51,7 +47,7 @@ public class SilentBoss {
 	
 	@Mod.EventHandler
 	public void fingerprintViolation(FMLFingerprintViolationEvent event) {
-		LogManager.fatal("Certificate Fingerprint Violation Detected!");
+		LogHelper.fatal("Certificate Fingerprint Violation Detected!");
 	}
 	
 	@Mod.EventHandler
@@ -62,12 +58,6 @@ public class SilentBoss {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new SilentBossListener());
-	}
-	
-	@Mod.EventHandler
-	@SideOnly(Side.SERVER)
-	public void serverLoad(FMLServerStartingEvent event) {
-		event.registerServerCommand(new SilentBossCommand());
 	}
 	
 	public static SilentBoss getInstance() {

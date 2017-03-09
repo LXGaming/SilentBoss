@@ -2,7 +2,7 @@
   {
     "modid": "silentboss",
     "name": "SilentBoss",
-    "description": "Silence the bosses",
+    "description": "Silence the bosses\nPatreon - https://www.patreon.com/lxgaming\nSource - https://github.com/LXGaming/SilentBoss",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://lxgaming.github.io/",

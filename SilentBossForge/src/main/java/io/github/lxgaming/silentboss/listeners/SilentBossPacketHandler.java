@@ -17,7 +17,7 @@
 package io.github.lxgaming.silentboss.listeners;
 
 import io.github.lxgaming.silentboss.SilentBoss;
-import io.github.lxgaming.silentboss.util.LogManager;
+import io.github.lxgaming.silentboss.util.LogHelper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -48,20 +48,20 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 			int effectId = packetBuffer.readInt();
 			if (effectId == 1028 && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
 				if (SilentBoss.getInstance().getConfig().isDebug()) {
-					LogManager.info("Successfully suppressed 'EnderDragon' sound.");
+					LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
 				}
 				return;
 			}
 			
 			if (effectId == 1023 && SilentBoss.getInstance().getConfig().isSilenceWither()) {
 				if (SilentBoss.getInstance().getConfig().isDebug()) {
-					LogManager.info("Successfully suppressed 'Wither' sound.");
+					LogHelper.info("Successfully suppressed 'Wither' sound.");
 				}
 				return;
 			}
 			super.write(ctx, msg, promise);
 		} catch (Exception ex) {
-			LogManager.error("Exception in SilentBossPacketHandler!");
+			LogHelper.error("Exception in SilentBossPacketHandler!");
 			ex.printStackTrace();
 		} finally {
 			if (byteBuf != null) {
