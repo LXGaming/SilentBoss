@@ -24,7 +24,4 @@ public class Reference {
 	public static final String ACCEPTED_VERSIONS = "[1.11.2]";
 	public static final String ACCEPTABLE_REMOTE_VERSIONS = "*";
 	public static final String CERTIFICATE_FINGERPRINT = "565fa4dbf20e7c3c4423950ca8e0bdabf7568796";
-	
-	public static final String CLIENT_PROXY_CLASS = "io.github.lxgaming.silentboss.proxy.ClientProxy";
-	public static final String SERVER_PROXY_CLASS = "io.github.lxgaming.silentboss.proxy.ServerProxy";
 }
