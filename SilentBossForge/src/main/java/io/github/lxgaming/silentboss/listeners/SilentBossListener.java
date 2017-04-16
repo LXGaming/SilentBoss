@@ -51,6 +51,6 @@ public class SilentBossListener {
 	@SubscribeEvent
 	@SideOnly(Side.SERVER)
 	public void onServerConnectionFromClient(ServerConnectionFromClientEvent event) {
-		event.getManager().channel().pipeline().addBefore("encoder", "silentboss_encoder", new SilentBossPacketHandler());
+		event.getManager().channel().pipeline().addBefore("encoder", "silentboss:encoder", new SilentBossPacketHandler());
 	}
 }

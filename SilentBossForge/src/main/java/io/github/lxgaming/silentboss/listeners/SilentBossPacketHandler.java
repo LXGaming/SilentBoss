@@ -22,7 +22,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import net.minecraft.network.PacketBuffer;
 
 public class SilentBossPacketHandler extends ChannelDuplexHandler {
 	
@@ -31,33 +30,11 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 		ByteBuf byteBuf = null;
 		
 		try {
-			if (!ByteBuf.class.isAssignableFrom(msg.getClass())) {
-				super.write(ctx, msg, promise);
-				return;
-			}
-			
-			byteBuf = ((ByteBuf) msg).copy();
-			PacketBuffer packetBuffer = new PacketBuffer(byteBuf);
-			int packetId = packetBuffer.readVarInt();
-			
-			if (packetId != 33) {
-				super.write(ctx, msg, promise);
-				return;
-			}
-			
-			int effectId = packetBuffer.readInt();
-			if (effectId == 1028 && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
-				if (SilentBoss.getInstance().getConfig().isDebug()) {
-					LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
+			if (ByteBuf.class.isAssignableFrom(msg.getClass())) {
+				byteBuf = ((ByteBuf) msg).copy();
+				if (readVarInt(byteBuf) == 33 && shouldSilence(byteBuf.readInt())) {
+					return;
 				}
-				return;
-			}
-			
-			if (effectId == 1023 && SilentBoss.getInstance().getConfig().isSilenceWither()) {
-				if (SilentBoss.getInstance().getConfig().isDebug()) {
-					LogHelper.info("Successfully suppressed 'Wither' sound.");
-				}
-				return;
 			}
 			super.write(ctx, msg, promise);
 		} catch (Exception ex) {
@@ -70,5 +47,41 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 			}
 		}
 		return;
+	}
+	
+	private boolean shouldSilence(int effectId) {
+		if (effectId == 1028 && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
+			if (SilentBoss.getInstance().getConfig().isDebug()) {
+				LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
+			}
+			return true;
+		}
+		
+		if (effectId == 1023 && SilentBoss.getInstance().getConfig().isSilenceWither()) {
+			if (SilentBoss.getInstance().getConfig().isDebug()) {
+				LogHelper.info("Successfully suppressed 'Wither' sound.");
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private int readVarInt(ByteBuf byteBuf) {
+		int out = 0;
+		int bytes = 0;
+		
+		while (true) {
+			byte read = byteBuf.readByte();
+			out |= (read & 127) << (bytes++ * 7);
+			
+			if (bytes > 5) {
+				return 0;
+			}
+			
+			if ((read & 128) != 128) {
+				break;
+			}
+		}
+		return out;
 	}
 }
