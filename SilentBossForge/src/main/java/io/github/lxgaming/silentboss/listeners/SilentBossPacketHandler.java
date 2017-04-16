@@ -51,16 +51,12 @@ public class SilentBossPacketHandler extends ChannelDuplexHandler {
 	
 	private boolean shouldSilence(int effectId) {
 		if (effectId == 1028 && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
-			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
-			}
+			SilentBoss.getInstance().debugMessage("Successfully suppressed 'EnderDragon' sound.");
 			return true;
 		}
 		
 		if (effectId == 1023 && SilentBoss.getInstance().getConfig().isSilenceWither()) {
-			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogHelper.info("Successfully suppressed 'Wither' sound.");
-			}
+			SilentBoss.getInstance().debugMessage("Successfully suppressed 'Wither' sound.");
 			return true;
 		}
 		return false;

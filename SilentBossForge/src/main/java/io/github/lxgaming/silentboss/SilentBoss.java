@@ -18,6 +18,7 @@ package io.github.lxgaming.silentboss;
 
 import io.github.lxgaming.silentboss.configuration.Config;
 import io.github.lxgaming.silentboss.listeners.SilentBossListener;
+import io.github.lxgaming.silentboss.util.LogHelper;
 import io.github.lxgaming.silentboss.util.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -57,6 +58,12 @@ public class SilentBoss {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new SilentBossListener());
+	}
+	
+	public void debugMessage(String message) {
+		if (SilentBoss.getInstance().getConfig() != null && SilentBoss.getInstance().getConfig().isDebug()) {
+			LogHelper.info(message);
+		}
 	}
 	
 	public static SilentBoss getInstance() {

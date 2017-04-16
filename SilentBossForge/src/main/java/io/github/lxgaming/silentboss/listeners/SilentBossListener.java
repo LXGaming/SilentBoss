@@ -17,7 +17,6 @@
 package io.github.lxgaming.silentboss.listeners;
 
 import io.github.lxgaming.silentboss.SilentBoss;
-import io.github.lxgaming.silentboss.util.LogHelper;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent;
@@ -33,24 +32,25 @@ public class SilentBossListener {
 			return;
 		}
 		
-		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.enderdragon.death")) {
+		if (event.getName().equals("entity.enderdragon.death") && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
 			event.setResultSound(null);
-			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogHelper.info("Successfully suppressed 'EnderDragon' sound.");
-			}
+			SilentBoss.getInstance().debugMessage("Successfully suppressed 'EnderDragon' sound.");
 		}
 		
-		if (SilentBoss.getInstance().getConfig().isSilenceEnderDragon() && event.getName().equals("entity.wither.spawn")) {
+		if (event.getName().equals("entity.wither.spawn") && SilentBoss.getInstance().getConfig().isSilenceEnderDragon()) {
 			event.setResultSound(null);
-			if (SilentBoss.getInstance().getConfig().isDebug()) {
-				LogHelper.info("Successfully suppressed 'Wither' sound.");
-			}
+			SilentBoss.getInstance().debugMessage("Successfully suppressed 'Wither' sound.");
 		}
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.SERVER)
 	public void onServerConnectionFromClient(ServerConnectionFromClientEvent event) {
-		event.getManager().channel().pipeline().addBefore("encoder", "silentboss:encoder", new SilentBossPacketHandler());
+		if (event.getManager().channel().pipeline().get("silentboss:encoder") == null) {
+			event.getManager().channel().pipeline().addBefore("encoder", "silentboss:encoder", new SilentBossPacketHandler());
+			SilentBoss.getInstance().debugMessage("Successfully added channel.");
+			return;
+		}
+		SilentBoss.getInstance().debugMessage("Failed to add channel!");
 	}
 }
