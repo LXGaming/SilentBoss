@@ -20,7 +20,6 @@ import io.github.lxgaming.silentboss.config.Config;
 import io.github.lxgaming.silentboss.listeners.SilentBossListener;
 import io.github.lxgaming.silentboss.util.LogHelper;
 import io.github.lxgaming.silentboss.util.Reference;
-import io.netty.util.ResourceLeakDetector;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
@@ -60,7 +59,7 @@ public class SilentBoss {
     }
     
     public void debugMessage(String message) {
-        if (SilentBoss.getInstance().getConfig() != null && SilentBoss.getInstance().getConfig().isDebug()) {
+        if (getConfig() != null && getConfig().isDebug()) {
             LogHelper.info(message);
         }
     }

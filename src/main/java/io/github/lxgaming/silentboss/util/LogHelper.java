@@ -24,36 +24,36 @@ public class LogHelper {
     
     private static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
     
-    public static void all(String string) {
-        getLogger().log(Level.ALL, string);
+    public static void all(String string, Object... objects) {
+        getLogger().log(Level.ALL, string, objects);
     }
     
-    public static void debug(String string) {
-        getLogger().log(Level.DEBUG, string);
+    public static void debug(String string, Object... objects) {
+        getLogger().log(Level.DEBUG, string, objects);
     }
     
-    public static void error(String string) {
-        getLogger().log(Level.ERROR, string);
+    public static void error(String string, Object... objects) {
+        getLogger().log(Level.ERROR, string, objects);
     }
     
-    public static void fatal(String string) {
-        getLogger().log(Level.FATAL, string);
+    public static void fatal(String string, Object... objects) {
+        getLogger().log(Level.FATAL, string, objects);
     }
     
-    public static void info(String string) {
-        getLogger().log(Level.INFO, string);
+    public static void info(String string, Object... objects) {
+        getLogger().log(Level.INFO, string, objects);
     }
     
-    public static void off(String string) {
-        getLogger().log(Level.OFF, string);
+    public static void off(String string, Object... objects) {
+        getLogger().log(Level.OFF, string, objects);
     }
     
-    public static void trace(String string) {
-        getLogger().log(Level.TRACE, string);
+    public static void trace(String string, Object... objects) {
+        getLogger().log(Level.TRACE, string, objects);
     }
     
-    public static void warn(String string) {
-        getLogger().log(Level.WARN, string);
+    public static void warn(String string, Object... objects) {
+        getLogger().log(Level.WARN, string, objects);
     }
     
     public static Logger getLogger() {
