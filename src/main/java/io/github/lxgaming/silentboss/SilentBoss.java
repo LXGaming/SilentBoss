@@ -58,9 +58,9 @@ public class SilentBoss {
         MinecraftForge.EVENT_BUS.register(new SilentBossListener());
     }
     
-    public void debugMessage(String message) {
+    public void debugMessage(String string, Object... objects) {
         if (getConfig() != null && getConfig().isDebug()) {
-            LogHelper.info(message);
+            LogHelper.info(string, objects);
         }
     }
     

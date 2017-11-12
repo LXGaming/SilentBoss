@@ -20,7 +20,7 @@ public class Reference {
     
     public static final String MOD_ID = "silentboss";
     public static final String MOD_NAME = "SilentBoss";
-    public static final String MOD_VERSION = "1.5.0";
+    public static final String MOD_VERSION = "1.5.1";
     public static final String GUI_FACTORY = "io.github.lxgaming.silentboss.config.GuiModConfigFactory";
     public static final String ACCEPTED_VERSIONS = "[1.10.2,1.12.2]";
     public static final String ACCEPTABLE_REMOTE_VERSIONS = "*";

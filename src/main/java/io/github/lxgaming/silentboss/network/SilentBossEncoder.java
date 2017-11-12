@@ -67,7 +67,7 @@ public class SilentBossEncoder extends ChannelOutboundHandlerAdapter {
         return false;
     }
     
-    public int getPacketId() {
+    private int getPacketId() {
         return packetId;
     }
 }
